@@ -3,6 +3,7 @@ print(sys.version)
 import math
 import time
 import pickle
+import os
 '''
 This program intends to find the nth prime number.
 '''
@@ -13,8 +14,11 @@ startTime = time.time() # Start timer
 primes = None
 
 # Read pre saved primes and load into a list
-with open('primes', 'rb') as f:
-    primes = pickle.load(f)
+if os.path.isfile('./primes'):
+    with open('primes', 'rb') as f:
+        primes = pickle.load(f)
+else:
+    primes = []
 
 # Function to generate first n primes
 def getPrimes(n):
@@ -33,7 +37,10 @@ def getPrimes(n):
         pickle.dump(primes, f)
 
 # Check if pre saved file has required first n primes. If not then generate new primes with the function above
-if(len(primes) < nth):
+if os.path.isfile('./primes'):
+    if(len(primes) < nth):
+        getPrimes(nth)
+else:
     getPrimes(nth)
 
 print(str(nth) + "th prime : " + str(primes[nth-1]))
