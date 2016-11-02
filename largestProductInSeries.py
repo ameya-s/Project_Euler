@@ -2,7 +2,6 @@ import sys
 print(sys.version)
 import math
 import time
-import pickle
 '''
 The four adjacent digits in the 1000-digit number that have the greatest product are 9 × 9 × 8 × 9 = 5832.
 This program intends to find the greatest product of thirteen adjacent digits in the 1000-digit number.
