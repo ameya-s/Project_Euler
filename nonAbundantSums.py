@@ -2,6 +2,7 @@ import sys
 print(sys.version)
 import math
 import time
+import itertools
 '''
 A perfect number is a number for which the sum of its proper divisors is exactly equal to the number.
 For example, the sum of the proper divisors of 28 would be 1 + 2 + 4 + 7 + 14 = 28, which means that 28 is a perfect number.
@@ -13,38 +14,25 @@ it is known that the greatest number that cannot be expressed as the sum of two 
 Find the sum of all the positive integers which cannot be written as the sum of two abundant numbers.
 '''
 startTime = time.time() # Start timer
+limit = 28123  #According to Wolfram Mathworld’s discussion on Abundant Numbers, “Every number greater than 20161 can be expressed as a sum of two abundant numbers. ” So our upper bound is 20161 instead of 28123.
+abundants = set()
 
-abundants = []
-def isAbundant(n):
-    sum = 1
-    if n % 2 == 0 :
-        step = 2
-        sum = sum + 2
-    else:
-        step = 1
-    for x in range(3, int(math.sqrt(n))+1, step):
+def sumFactors(n):
+    sumF = 1
+    t = n**0.5
+    for x in range(2, int(t+1)):
         if n % x == 0:
-            sum = sum + x + n/x
-
-    return sum > n
+            sumF += x + n/x
+    if t == int(t): sumF -= t    #correct s if t is a perfect square
+    return sumF
 
 non_abundant_sum = 0
 
-for x in range(12, 28124):
-    if isAbundant(x):
-        abundants.append(x)
-print(len(abundants))
-
-for x in range(1, 28124):
-    unit_sum = 0
-    for i in range(12, x):
-        if i in abundants and (x-i) in abundants:
-            unit_sum = 0
-            break;
-        unit_sum = x
-    non_abundant_sum = non_abundant_sum + unit_sum
-
-
+for x in range(1, limit+1):
+    if sumFactors(x) > x :
+        abundants.add(x)
+    if not any((x-a in abundants) for a in abundants):
+        non_abundant_sum += x
 
 print("Non abundant sum is : " + str(non_abundant_sum))
 print("Time Required for execution : " + str(time.time()-startTime))
