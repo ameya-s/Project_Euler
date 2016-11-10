@@ -1,3 +1,4 @@
+#! python
 import sys
 print(sys.version)
 import math
@@ -29,6 +30,6 @@ for x in range(1, limit+1):
     if int(sum_y) == int(x) and x != sum_x and x not in amicable_pairs and sum_x not in amicable_pairs:
           amicable_pairs.append(x)
           amicable_pairs.append(sum_x)
-          
+
 print("Sum of amicable pairs is  : " + str(sum(amicable_pairs)))
 print("Time Required for execution : " + str(time.time()-startTime))
