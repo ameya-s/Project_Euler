@@ -11,3 +11,6 @@
 
 # Generated batch files in the directory
 *.bat
+
+# Suffix Tree
+./suffix_tree-2.1
